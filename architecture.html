@@ -1,0 +1,1208 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta
+      name="description"
+      content="Explore the Tetris Optimizer architecture, function call graph, and Go implementation."
+    />
+
+    <title>Project Architecture | Tetris Solver</title>
+
+    <link rel="stylesheet" href="./css/variables.css" />
+    <link rel="stylesheet" href="./css/reset.css" />
+    <link rel="stylesheet" href="./css/layout.css" />
+    <link rel="stylesheet" href="./css/components.css" />
+    <link rel="stylesheet" href="./css/architecture.css" />
+    <link rel="stylesheet" href="./css/dfs.css" />
+  </head>
+
+  <body>
+    <div class="app-container">
+      <!-- Header -->
+      <header class="topbar">
+        <div class="brand">
+          <div class="brand-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+
+          <div class="brand-info">
+            <h1>TETRIS SOLVER</h1>
+            <p>Project Documentation</p>
+          </div>
+        </div>
+
+        <nav class="top-nav">
+          <a href="./index.html" class="nav-link"> Solver </a>
+
+          <a href="./architecture.html" class="nav-link active">
+            Architecture
+          </a>
+        </nav>
+
+        <div class="solver-status">
+          <span class="status-indicator"></span>
+          <span>Documentation</span>
+        </div>
+      </header>
+
+      <main class="architecture-main">
+        <!-- Introduction -->
+        <section class="page-intro architecture-intro">
+          <span class="section-eyebrow"> GO PROJECT DOCUMENTATION </span>
+
+          <h2>Project Architecture</h2>
+
+          <p>
+            Explore how the Tetris Optimizer works, understand the relationship
+            between its functions, and follow the execution flow from input to
+            output.
+          </p>
+        </section>
+
+        <!-- Project Overview -->
+        <section class="overview-grid">
+          <article class="overview-card">
+            <span class="overview-icon parser-icon">P</span>
+
+            <div>
+              <h3>Parser</h3>
+              <p>Input parsing and validation</p>
+            </div>
+
+            <span class="package-tag">parser/</span>
+          </article>
+
+          <article class="overview-card">
+            <span class="overview-icon solver-icon">S</span>
+
+            <div>
+              <h3>Solver</h3>
+              <p>Grid operations and backtracking</p>
+            </div>
+
+            <span class="package-tag">solver/</span>
+          </article>
+
+          <article class="overview-card">
+            <span class="overview-icon main-icon">M</span>
+
+            <div>
+              <h3>Main</h3>
+              <p>Application entry point</p>
+            </div>
+
+            <span class="package-tag">cmd/</span>
+          </article>
+        </section>
+
+        <!-- Project Structure -->
+        <section class="architecture-section">
+          <div class="section-heading">
+            <div>
+              <span class="section-eyebrow">01 / STRUCTURE</span>
+              <h2>Project Structure</h2>
+              <p>Organization of the original Go application.</p>
+            </div>
+          </div>
+
+          <div class="structure-panel">
+            <div class="tree-root">
+              <span class="tree-folder">📁</span>
+              <strong>tetris-optimizer/</strong>
+            </div>
+
+            <div class="tree-children">
+              <div class="tree-folder-group">
+                <span class="tree-folder">📁</span>
+                <strong>cmd/</strong>
+                <span class="tree-description">Application entry point</span>
+              </div>
+
+              <div class="tree-file">
+                <span>📄</span>
+                <code>main.go</code>
+              </div>
+
+              <div class="tree-folder-group">
+                <span class="tree-folder">📁</span>
+                <strong>parser/</strong>
+                <span class="tree-description">Input processing</span>
+              </div>
+
+              <div class="tree-file">
+                <span>📄</span>
+                <code>parser.go</code>
+              </div>
+
+              <div class="tree-file">
+                <span>📄</span>
+                <code>parser_test.go</code>
+              </div>
+
+              <div class="tree-folder-group">
+                <span class="tree-folder">📁</span>
+                <strong>solver/</strong>
+                <span class="tree-description">Puzzle solving logic</span>
+              </div>
+
+              <div class="tree-file">
+                <span>📄</span>
+                <code>solver.go</code>
+              </div>
+
+              <div class="tree-file">
+                <span>📄</span>
+                <code>solver_test.go</code>
+              </div>
+
+              <div class="tree-folder-group">
+                <span class="tree-folder">📁</span>
+                <strong>testdata/</strong>
+                <span class="tree-description">Input test cases</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Data Structures -->
+        <section class="architecture-section">
+          <div class="section-heading">
+            <div>
+              <span class="section-eyebrow">02 / DATA MODELS</span>
+              <h2>Data Structures</h2>
+              <p>Core types used to represent Tetrominoes.</p>
+            </div>
+          </div>
+
+          <div class="data-types-grid">
+            <article class="data-card">
+              <div class="data-card-heading">
+                <span class="data-type-icon">C</span>
+                <div>
+                  <h3>Cell</h3>
+                  <p>parser / data structure</p>
+                </div>
+              </div>
+
+              <pre><code>type Cell struct {
+    Row int
+    Col int
+}</code></pre>
+
+              <p class="card-description">
+                Represents one occupied position inside a Tetromino using row
+                and column coordinates.
+              </p>
+            </article>
+
+            <article class="data-card">
+              <div class="data-card-heading">
+                <span class="data-type-icon">T</span>
+                <div>
+                  <h3>Tetromino</h3>
+                  <p>parser / data structure</p>
+                </div>
+              </div>
+
+              <pre><code>type Tetromino struct {
+    Cells []Cell
+}</code></pre>
+
+              <p class="card-description">
+                Stores the four occupied cells that form one connected
+                Tetromino.
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <!-- DFS Visualization -->
+        <section class="architecture-section" id="dfs-visualizer">
+          <div class="section-heading">
+            <div>
+              <span class="section-eyebrow">03 / ALGORITHM FUNDAMENTALS</span>
+              <h2>Depth-First Search (DFS)</h2>
+              <p>
+                Explore how DFS traverses a graph by following one path as
+                deeply as possible before exploring another.
+              </p>
+            </div>
+
+            <span class="graph-label">INTERACTIVE DEMO</span>
+          </div>
+
+          <!-- DFS Explanation -->
+          <div class="dfs-explanation-grid">
+            <article class="dfs-info-card">
+              <span class="dfs-info-number">01</span>
+              <h3>Start from a Node</h3>
+              <p>
+                DFS begins at a selected starting node and marks it as
+                discovered.
+              </p>
+            </article>
+
+            <article class="dfs-info-card">
+              <span class="dfs-info-number">02</span>
+              <h3>Explore Neighbors</h3>
+              <p>
+                It explores an unvisited neighboring node and continues deeper
+                into the graph.
+              </p>
+            </article>
+
+            <article class="dfs-info-card">
+              <span class="dfs-info-number">03</span>
+              <h3>Backtrack</h3>
+              <p>
+                When there are no more unvisited neighbors, DFS returns to an
+                earlier node.
+              </p>
+            </article>
+
+            <article class="dfs-info-card">
+              <span class="dfs-info-number">04</span>
+              <h3>Finish Traversal</h3>
+              <p>
+                The traversal finishes when all reachable nodes have been
+                visited.
+              </p>
+            </article>
+          </div>
+
+          <!-- Interactive DFS Demo -->
+
+          <div class="dfs-demo-panel">
+            <div class="dfs-demo-header">
+              <div>
+                <h3>DFS Traversal Visualization</h3>
+                <p>Explore DFS with Tetromino shapes and larger graphs.</p>
+              </div>
+
+              <span class="dfs-demo-status" id="dfs-status">Ready</span>
+            </div>
+
+            <!-- Visualization Mode -->
+            <div class="dfs-mode-switch">
+              <button id="dfs-mode-shapes" class="active" type="button">
+                Tetromino Shapes
+              </button>
+
+              <button id="dfs-mode-graph" type="button">
+                Large Graph (A–I)
+              </button>
+            </div>
+
+            <!-- Shape Selector -->
+            <div class="dfs-shape-picker" id="dfs-shape-picker">
+              <label for="dfs-shape-select">Select Tetromino</label>
+
+              <select id="dfs-shape-select">
+                <option value="square">Square (O)</option>
+                <option value="line">Line (I)</option>
+                <option value="tee">T-Shape</option>
+                <option value="ell">L-Shape</option>
+                <option value="ess">S-Shape</option>
+                <option value="zee">Z-Shape</option>
+              </select>
+            </div>
+
+            <div class="dfs-demo-layout">
+              <!-- Graph Stage -->
+              <div class="dfs-graph-stage">
+                <div class="dfs-graph-heading">
+                  <h4 id="dfs-graph-title">Square Tetromino</h4>
+                  <span id="dfs-graph-description">4 connected cells</span>
+                </div>
+
+                <svg
+                  id="dfs-graph"
+                  class="dfs-graph"
+                  viewBox="0 0 520 390"
+                  role="img"
+                  aria-label="Interactive DFS graph visualization"
+                >
+                  <g id="dfs-edges"></g>
+                  <g id="dfs-nodes"></g>
+                </svg>
+
+                <div class="dfs-graph-legend">
+                  <span>
+                    <i class="dfs-legend-color current"></i>
+                    Current
+                  </span>
+
+                  <span>
+                    <i class="dfs-legend-color pending"></i>
+                    In Stack
+                  </span>
+
+                  <span>
+                    <i class="dfs-legend-color visited"></i>
+                    Visited
+                  </span>
+
+                  <span>
+                    <i class="dfs-legend-color unvisited"></i>
+                    Unvisited
+                  </span>
+                </div>
+              </div>
+
+              <!-- Execution State -->
+              <div class="dfs-state-panel">
+                <div class="dfs-current-step">
+                  <span>EXECUTION STEP</span>
+
+                  <strong id="dfs-step-number">1 / 1</strong>
+
+                  <h3 id="dfs-step-title">Initialize DFS</h3>
+
+                  <p id="dfs-step-message" aria-live="polite">
+                    Start at A and push it onto the Stack.
+                  </p>
+                </div>
+
+                <div class="dfs-direction-card">
+                  <span>Current Neighbor / Direction</span>
+                  <strong id="dfs-direction">Not started</strong>
+                </div>
+
+                <div class="dfs-state-block">
+                  <div class="dfs-state-heading">
+                    <h4 id="dfs-domain-label">cellSet</h4>
+                    <span id="dfs-domain-count">4</span>
+                  </div>
+
+                  <div id="dfs-domain" class="dfs-chip-list"></div>
+                </div>
+
+                <div class="dfs-state-block">
+                  <div class="dfs-state-heading">
+                    <h4>open (Stack)</h4>
+                    <span>Top → Right</span>
+                  </div>
+
+                  <div id="dfs-stack" class="dfs-chip-list"></div>
+                </div>
+
+                <div class="dfs-state-block">
+                  <div class="dfs-state-heading">
+                    <h4>visited (Map)</h4>
+                    <span id="dfs-visited-count">1</span>
+                  </div>
+
+                  <div id="dfs-visited" class="dfs-chip-list"></div>
+                </div>
+
+                <div class="dfs-state-block">
+                  <div class="dfs-state-heading">
+                    <h4>Processing Order</h4>
+                    <span id="dfs-processed-count">0</span>
+                  </div>
+
+                  <div id="dfs-processed" class="dfs-chip-list"></div>
+                </div>
+
+                <div class="dfs-traversal-result">
+                  <span>DFS Processing Order</span>
+                  <strong id="dfs-traversal-order">Not started</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Playback Controls -->
+            <div class="dfs-controls">
+              <div class="dfs-control-buttons">
+                <button id="dfs-reset" type="button">Reset</button>
+                <button id="dfs-prev" type="button" disabled>Previous</button>
+                <button id="dfs-play" type="button">Play</button>
+                <button id="dfs-next" type="button">Next</button>
+                <button id="dfs-last" type="button">Last</button>
+              </div>
+
+              <div class="dfs-progress-track">
+                <div id="dfs-progress" class="dfs-progress-fill"></div>
+              </div>
+            </div>
+
+            <p class="dfs-implementation-note">
+              <strong>Implementation:</strong>
+              The visualization follows the same neighbor order used in
+              AreConnected(): Left, Right, Down, Up. Nodes are marked as visited
+              when they are pushed onto the Stack.
+            </p>
+          </div>
+
+          <!-- DFS in Tetris -->
+          <div class="dfs-application-grid">
+            <article class="dfs-application-card parser-application">
+              <span class="application-label">PARSER</span>
+
+              <h3>DFS in AreConnected()</h3>
+
+              <p>
+                DFS traverses the occupied cells of a Tetromino through their
+                horizontal and vertical neighbors.
+              </p>
+
+              <div class="application-code">
+                <code>AreConnected(cells) → bool</code>
+              </div>
+
+              <p class="application-result">
+                <strong>Goal:</strong>
+                Verify that all four occupied cells are connected.
+              </p>
+            </article>
+
+            <article class="dfs-application-card solver-application">
+              <span class="application-label">SOLVER</span>
+
+              <h3>DFS in Solve()</h3>
+
+              <p>
+                The solver explores possible piece placements recursively. When
+                a search path fails, it undoes the previous placement and tries
+                another possibility.
+              </p>
+
+              <div class="application-code">
+                <code>Solve(i, grid, tetrominoes) → bool</code>
+              </div>
+
+              <p class="application-result">
+                <strong>Goal:</strong>
+                Find a complete valid arrangement using DFS and Backtracking.
+              </p>
+            </article>
+          </div>
+
+          <div class="dfs-important-note">
+            <strong>Important distinction:</strong>
+            DFS is a graph traversal/search strategy. Backtracking is a search
+            technique that undoes a decision when the current path cannot lead
+            to a solution. They work together in the recursive Tetris solver,
+            but they are not the same concept.
+          </div>
+        </section>
+
+        <!-- Function Call Graph -->
+        <section class="architecture-section">
+          <div class="section-heading">
+            <div>
+              <span class="section-eyebrow">03 / EXECUTION FLOW</span>
+              <h2>Function Call Graph</h2>
+              <p>
+                Select any function in the graph to explore its responsibility.
+              </p>
+            </div>
+
+            <span class="graph-label">INTERACTIVE GRAPH</span>
+          </div>
+
+          <div class="graph-legend">
+            <span><i class="legend-dot main-dot"></i>Main Flow</span>
+            <span><i class="legend-dot parser-dot"></i>Parser</span>
+            <span><i class="legend-dot solver-dot"></i>Solver</span>
+            <span><i class="legend-line"></i>Function Call</span>
+            <span
+              ><i class="legend-line recursion-line"></i>Recursion /
+              Backtracking</span
+            >
+          </div>
+
+          <div class="graph-scroll">
+            <svg
+              class="function-graph"
+              viewBox="0 0 1400 680"
+              role="img"
+              aria-label="Tetris Optimizer function call graph"
+            >
+              <defs>
+                <marker
+                  id="arrow"
+                  markerWidth="10"
+                  markerHeight="10"
+                  refX="8"
+                  refY="3"
+                  orient="auto"
+                >
+                  <path d="M0,0 L0,6 L9,3 z" fill="#94a3b8" />
+                </marker>
+
+                <marker
+                  id="arrow-purple"
+                  markerWidth="10"
+                  markerHeight="10"
+                  refX="8"
+                  refY="3"
+                  orient="auto"
+                >
+                  <path d="M0,0 L0,6 L9,3 z" fill="#a78bfa" />
+                </marker>
+
+                <marker
+                  id="arrow-cyan"
+                  markerWidth="10"
+                  markerHeight="10"
+                  refX="8"
+                  refY="3"
+                  orient="auto"
+                >
+                  <path d="M0,0 L0,6 L9,3 z" fill="#22d3ee" />
+                </marker>
+              </defs>
+
+              <!-- Main Flow Connections -->
+
+              <g class="graph-connectors">
+                <path d="M190 105 H230" />
+                <path d="M405 105 H445" />
+                <path d="M635 105 H675" />
+                <path d="M855 105 H895" />
+                <path d="M1115 105 H1155" />
+
+                <path d="M540 145 V230" class="parser-connector" />
+
+                <path d="M1005 145 V230" class="solver-connector" />
+                <path d="M1005 310 V345 H1080 V375" class="solver-connector" />
+
+                <path d="M1080 455 V490 H820 V455" class="solver-connector" />
+                <path d="M1080 455 V535" class="backtrack-connector" />
+                <path
+                  d="M1080 590 H1290 V415 H1175"
+                  class="backtrack-connector"
+                />
+                <path d="M820 415 H760" class="solver-connector" />
+              </g>
+
+              <!-- Main Nodes -->
+
+              <a href="#fn-main" class="graph-node main-node">
+                <rect x="30" y="65" width="160" height="80" rx="12" />
+                <text x="110" y="99" text-anchor="middle">main()</text>
+                <text
+                  x="110"
+                  y="121"
+                  text-anchor="middle"
+                  class="node-subtitle"
+                >
+                  Entry Point
+                </text>
+              </a>
+
+              <a href="#fn-readfile" class="graph-node main-node">
+                <rect x="230" y="65" width="175" height="80" rx="12" />
+                <text x="317" y="99" text-anchor="middle">ReadFile(path)</text>
+                <text
+                  x="317"
+                  y="121"
+                  text-anchor="middle"
+                  class="node-subtitle"
+                >
+                  Read Input
+                </text>
+              </a>
+
+              <a href="#fn-parse" class="graph-node parser-node">
+                <rect x="445" y="65" width="190" height="80" rx="12" />
+                <text x="540" y="99" text-anchor="middle">Parse(content)</text>
+                <text
+                  x="540"
+                  y="121"
+                  text-anchor="middle"
+                  class="node-subtitle"
+                >
+                  []Tetromino
+                </text>
+              </a>
+
+              <a href="#fn-normalize" class="graph-node solver-node">
+                <rect x="675" y="65" width="180" height="80" rx="12" />
+                <text x="765" y="99" text-anchor="middle">Normalize()</text>
+                <text
+                  x="765"
+                  y="121"
+                  text-anchor="middle"
+                  class="node-subtitle"
+                >
+                  Coordinates
+                </text>
+              </a>
+
+              <a href="#fn-smallest" class="graph-node solver-node">
+                <rect x="895" y="65" width="220" height="80" rx="12" />
+                <text x="1005" y="99" text-anchor="middle">
+                  FindSmallestSquare()
+                </text>
+                <text
+                  x="1005"
+                  y="121"
+                  text-anchor="middle"
+                  class="node-subtitle"
+                >
+                  Find Minimum Grid
+                </text>
+              </a>
+
+              <a href="#fn-print" class="graph-node main-node">
+                <rect x="1155" y="65" width="190" height="80" rx="12" />
+                <text x="1250" y="99" text-anchor="middle">PrintGrid()</text>
+                <text
+                  x="1250"
+                  y="121"
+                  text-anchor="middle"
+                  class="node-subtitle"
+                >
+                  Final Output
+                </text>
+              </a>
+
+              <!-- Parser Branch -->
+
+              <text
+                x="540"
+                y="210"
+                text-anchor="middle"
+                class="graph-group-label"
+              >
+                PARSER PACKAGE
+              </text>
+
+              <a href="#fn-connected" class="graph-node parser-node">
+                <rect x="445" y="230" width="190" height="80" rx="12" />
+                <text x="540" y="264" text-anchor="middle">AreConnected()</text>
+                <text
+                  x="540"
+                  y="286"
+                  text-anchor="middle"
+                  class="node-subtitle"
+                >
+                  DFS Validation
+                </text>
+              </a>
+
+              <!-- Solver Branch -->
+
+              <text
+                x="1005"
+                y="210"
+                text-anchor="middle"
+                class="graph-group-label"
+              >
+                SOLVER PACKAGE
+              </text>
+
+              <a href="#fn-grid" class="graph-node solver-node">
+                <rect x="910" y="230" width="190" height="80" rx="12" />
+                <text x="1005" y="264" text-anchor="middle">MakeGrid()</text>
+                <text
+                  x="1005"
+                  y="286"
+                  text-anchor="middle"
+                  class="node-subtitle"
+                >
+                  Create Empty Grid
+                </text>
+              </a>
+
+              <a href="#fn-solve" class="graph-node solver-node">
+                <rect x="990" y="375" width="185" height="80" rx="12" />
+                <text x="1082" y="409" text-anchor="middle">Solve()</text>
+                <text
+                  x="1082"
+                  y="431"
+                  text-anchor="middle"
+                  class="node-subtitle"
+                >
+                  Recursive DFS
+                </text>
+              </a>
+
+              <a href="#fn-canplace" class="graph-node solver-node">
+                <rect x="625" y="375" width="195" height="80" rx="12" />
+                <text x="722" y="409" text-anchor="middle">CanPlace()</text>
+                <text
+                  x="722"
+                  y="431"
+                  text-anchor="middle"
+                  class="node-subtitle"
+                >
+                  Check Position
+                </text>
+              </a>
+
+              <a href="#fn-place" class="graph-node solver-node">
+                <rect x="875" y="375" width="100" height="80" rx="12" />
+                <text x="925" y="409" text-anchor="middle">Place</text>
+                <text
+                  x="925"
+                  y="431"
+                  text-anchor="middle"
+                  class="node-subtitle"
+                >
+                  Piece
+                </text>
+              </a>
+
+              <a href="#fn-remove" class="graph-node backtrack-node">
+                <rect x="990" y="535" width="185" height="80" rx="12" />
+                <text x="1082" y="569" text-anchor="middle">RemovePiece()</text>
+                <text
+                  x="1082"
+                  y="591"
+                  text-anchor="middle"
+                  class="node-subtitle"
+                >
+                  Undo Placement
+                </text>
+              </a>
+
+              <text x="1220" y="575" class="graph-group-label">
+                BACKTRACKING
+              </text>
+
+              <text x="735" y="350" class="graph-note">Check position</text>
+
+              <text x="1145" y="495" class="graph-note">Recursive call</text>
+            </svg>
+          </div>
+
+          <p class="graph-hint">
+            <span>ⓘ</span>
+            Click a function node to jump to its documentation below. Scroll
+            horizontally to explore the full graph on smaller screens.
+          </p>
+        </section>
+
+        <!-- Function Documentation -->
+        <section class="architecture-section" id="function-documentation">
+          <div class="section-heading">
+            <div>
+              <span class="section-eyebrow">04 / DOCUMENTATION</span>
+              <h2>Function Documentation</h2>
+              <p>Responsibilities and relationships of each function.</p>
+            </div>
+          </div>
+
+          <!-- Main Package -->
+          <div class="package-heading main-package-heading">
+            <span>01</span>
+            <div>
+              <h3>cmd / main.go</h3>
+              <p>Application entry point and execution flow</p>
+            </div>
+          </div>
+
+          <div class="function-grid">
+            <article class="function-card main-function" id="fn-main">
+              <div class="function-card-header">
+                <span class="function-index">01</span>
+                <span class="function-type">ENTRY POINT</span>
+              </div>
+
+              <h3>main()</h3>
+              <code class="function-signature">func main()</code>
+
+              <p>
+                Starts the application and coordinates the complete execution
+                pipeline.
+              </p>
+
+              <div class="function-responsibility">
+                <strong>Responsibilities</strong>
+                <ul>
+                  <li>Read the input file path.</li>
+                  <li>Invoke the parser.</li>
+                  <li>Pass Tetrominoes to the solver.</li>
+                  <li>Print the final grid.</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="function-card main-function" id="fn-readfile">
+              <div class="function-card-header">
+                <span class="function-index">02</span>
+                <span class="function-type">INPUT</span>
+              </div>
+
+              <h3>ReadFile(path)</h3>
+              <code class="function-signature">File Reading Stage</code>
+
+              <p>
+                Reads the input content from the provided file path so it can be
+                processed by the parser.
+              </p>
+
+              <div class="function-responsibility">
+                <strong>Responsibilities</strong>
+                <ul>
+                  <li>Access the input file.</li>
+                  <li>Read its content.</li>
+                  <li>Provide the content to the parsing stage.</li>
+                </ul>
+              </div>
+            </article>
+          </div>
+
+          <!-- Parser Package -->
+          <div class="package-heading parser-package-heading">
+            <span>02</span>
+            <div>
+              <h3>parser / parser.go</h3>
+              <p>Input parsing and Tetromino validation</p>
+            </div>
+          </div>
+
+          <div class="function-grid">
+            <article class="function-card parser-function" id="fn-parse">
+              <div class="function-card-header">
+                <span class="function-index">03</span>
+                <span class="function-type">PARSER</span>
+              </div>
+
+              <h3>Parse(content)</h3>
+              <code class="function-signature">[]Tetromino</code>
+
+              <p>
+                Converts the input text into a collection of Tetromino
+                structures.
+              </p>
+
+              <div class="function-responsibility">
+                <strong>Responsibilities</strong>
+                <ul>
+                  <li>Split the input into 4 × 4 blocks.</li>
+                  <li>Extract occupied cell coordinates.</li>
+                  <li>Validate dimensions and characters.</li>
+                  <li>Check that every piece has four filled cells.</li>
+                  <li>Validate connectivity using AreConnected.</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="function-card parser-function" id="fn-connected">
+              <div class="function-card-header">
+                <span class="function-index">04</span>
+                <span class="function-type">DFS VALIDATION</span>
+              </div>
+
+              <h3>AreConnected(cells)</h3>
+              <code class="function-signature">bool</code>
+
+              <p>
+                Checks whether the four occupied cells form one connected shape.
+              </p>
+
+              <div class="function-responsibility">
+                <strong>Responsibilities</strong>
+                <ul>
+                  <li>Start DFS from one occupied cell.</li>
+                  <li>Explore horizontal and vertical neighbors.</li>
+                  <li>Track visited cells.</li>
+                  <li>Return true when all four cells are visited.</li>
+                </ul>
+              </div>
+            </article>
+          </div>
+
+          <!-- Solver Package -->
+          <div class="package-heading solver-package-heading">
+            <span>03</span>
+            <div>
+              <h3>solver / solver.go</h3>
+              <p>Grid management, recursive search and backtracking</p>
+            </div>
+          </div>
+
+          <div class="function-grid">
+            <article class="function-card solver-function" id="fn-normalize">
+              <div class="function-card-header">
+                <span class="function-index">05</span>
+                <span class="function-type">TRANSFORMATION</span>
+              </div>
+
+              <h3>Normalize(cells)</h3>
+              <code class="function-signature">[]Cell</code>
+
+              <p>
+                Moves the occupied cells to the top-left of their coordinate
+                space.
+              </p>
+
+              <div class="function-responsibility">
+                <strong>Responsibilities</strong>
+                <ul>
+                  <li>Find the minimum row and column.</li>
+                  <li>Subtract them from all coordinates.</li>
+                  <li>Preserve the original piece orientation.</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="function-card solver-function" id="fn-grid">
+              <div class="function-card-header">
+                <span class="function-index">06</span>
+                <span class="function-type">GRID</span>
+              </div>
+
+              <h3>MakeGrid(size)</h3>
+              <code class="function-signature">[][]byte</code>
+
+              <p>Creates an empty square grid with the requested dimensions.</p>
+
+              <div class="function-responsibility">
+                <strong>Responsibilities</strong>
+                <ul>
+                  <li>Create size × size rows and columns.</li>
+                  <li>Initialize every cell with a dot (.).</li>
+                  <li>Return the empty grid.</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="function-card solver-function" id="fn-canplace">
+              <div class="function-card-header">
+                <span class="function-index">07</span>
+                <span class="function-type">VALIDATION</span>
+              </div>
+
+              <h3>CanPlace(grid, t, r, c)</h3>
+              <code class="function-signature">bool</code>
+
+              <p>
+                Determines whether a Tetromino can be placed at the requested
+                position.
+              </p>
+
+              <div class="function-responsibility">
+                <strong>Responsibilities</strong>
+                <ul>
+                  <li>Check grid boundaries.</li>
+                  <li>Check for occupied cells.</li>
+                  <li>Prevent overlapping pieces.</li>
+                  <li>Return whether the placement is valid.</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="function-card solver-function" id="fn-place">
+              <div class="function-card-header">
+                <span class="function-index">08</span>
+                <span class="function-type">GRID OPERATION</span>
+              </div>
+
+              <h3>PlacePiece(grid, t, r, c, label)</h3>
+              <code class="function-signature">Grid Mutation</code>
+
+              <p>
+                Writes the Tetromino label into the corresponding grid cells.
+              </p>
+
+              <div class="function-responsibility">
+                <strong>Responsibilities</strong>
+                <ul>
+                  <li>Use the Tetromino cell coordinates.</li>
+                  <li>Apply the row and column offsets.</li>
+                  <li>Write the piece label into each occupied cell.</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="function-card solver-function" id="fn-remove">
+              <div class="function-card-header">
+                <span class="function-index">09</span>
+                <span class="function-type">BACKTRACKING</span>
+              </div>
+
+              <h3>RemovePiece(grid, t, r, c)</h3>
+              <code class="function-signature">Grid Mutation</code>
+
+              <p>
+                Removes a previously placed Tetromino when a search path fails.
+              </p>
+
+              <div class="function-responsibility">
+                <strong>Responsibilities</strong>
+                <ul>
+                  <li>Visit the piece's occupied cells.</li>
+                  <li>Restore those positions to empty cells.</li>
+                  <li>Allow the solver to try another placement.</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="function-card solver-function" id="fn-smallest">
+              <div class="function-card-header">
+                <span class="function-index">10</span>
+                <span class="function-type">MAIN SOLVER</span>
+              </div>
+
+              <h3>FindSmallestSquare(tetrominoes)</h3>
+              <code class="function-signature">[][]byte</code>
+
+              <p>
+                Finds the smallest square grid that can accommodate all
+                Tetrominoes.
+              </p>
+
+              <div class="function-responsibility">
+                <strong>Responsibilities</strong>
+                <ul>
+                  <li>Calculate an initial grid size.</li>
+                  <li>Normalize the Tetrominoes.</li>
+                  <li>Create a square grid using MakeGrid.</li>
+                  <li>Invoke Solve to search for an arrangement.</li>
+                  <li>Increase the grid size when no solution fits.</li>
+                  <li>Return the first successful grid.</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="function-card solver-function" id="fn-solve">
+              <div class="function-card-header">
+                <span class="function-index">11</span>
+                <span class="function-type">DFS / RECURSION</span>
+              </div>
+
+              <h3>Solve(i, grid, tetrominoes)</h3>
+              <code class="function-signature">bool</code>
+
+              <p>
+                Recursively searches for a valid arrangement of all Tetrominoes.
+              </p>
+
+              <div class="function-responsibility">
+                <strong>Responsibilities</strong>
+                <ul>
+                  <li>Check whether all pieces have been placed.</li>
+                  <li>Iterate over candidate positions.</li>
+                  <li>Validate positions using CanPlace.</li>
+                  <li>Place valid pieces using PlacePiece.</li>
+                  <li>Recursively attempt the next piece.</li>
+                  <li>Undo unsuccessful placements using RemovePiece.</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="function-card main-function" id="fn-print">
+              <div class="function-card-header">
+                <span class="function-index">12</span>
+                <span class="function-type">OUTPUT</span>
+              </div>
+
+              <h3>PrintGrid(grid)</h3>
+              <code class="function-signature">Grid Output</code>
+
+              <p>Prints the final solved grid row by row.</p>
+
+              <div class="function-responsibility">
+                <strong>Responsibilities</strong>
+                <ul>
+                  <li>Iterate through grid rows.</li>
+                  <li>Print the cell labels.</li>
+                  <li>Print empty cells as dots.</li>
+                </ul>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <!-- Backtracking Flow -->
+        <section class="architecture-section">
+          <div class="section-heading">
+            <div>
+              <span class="section-eyebrow">05 / ALGORITHM</span>
+              <h2>Backtracking Flow</h2>
+              <p>How the recursive solver explores possible arrangements.</p>
+            </div>
+          </div>
+
+          <div class="backtracking-panel">
+            <div class="backtracking-step">
+              <span class="flow-number">01</span>
+              <div>
+                <h3>Check Completion</h3>
+                <p>Have all Tetrominoes been placed?</p>
+              </div>
+              <span class="flow-status success">Yes → Success</span>
+            </div>
+
+            <div class="flow-connector"></div>
+
+            <div class="backtracking-step">
+              <span class="flow-number">02</span>
+              <div>
+                <h3>Find a Valid Position</h3>
+                <p>Use CanPlace to check boundaries and overlaps.</p>
+              </div>
+              <span class="flow-status neutral">Validate</span>
+            </div>
+
+            <div class="flow-connector"></div>
+
+            <div class="backtracking-step">
+              <span class="flow-number">03</span>
+              <div>
+                <h3>Place the Piece</h3>
+                <p>PlacePiece writes its label into the grid.</p>
+              </div>
+              <span class="flow-status success">Place</span>
+            </div>
+
+            <div class="flow-connector"></div>
+
+            <div class="backtracking-step">
+              <span class="flow-number">04</span>
+              <div>
+                <h3>Recursive Call</h3>
+                <p>Call Solve for the next Tetromino.</p>
+              </div>
+              <span class="flow-status neutral">DFS</span>
+            </div>
+
+            <div class="flow-connector"></div>
+
+            <div class="backtracking-step backtracking-failure">
+              <span class="flow-number">05</span>
+              <div>
+                <h3>Backtrack</h3>
+                <p>
+                  If the path fails, RemovePiece restores the previous grid
+                  state.
+                </p>
+              </div>
+              <span class="flow-status danger">Undo</span>
+            </div>
+
+            <p class="backtracking-note">
+              The solver returns to the previous decision and tries another
+              position until it finds a complete arrangement.
+            </p>
+          </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+          <p>Tetris Solver · Project Architecture</p>
+          <a
+            class="github-link"
+            href="https://github.com/AhmedAbdou2/tetris-solver-web"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            View on GitHub
+          </a>
+        </footer>
+      </main>
+    </div>
+    <script type="module" src="./js/visualization/dfs-visualizer.js"></script>
+  </body>
+</html>

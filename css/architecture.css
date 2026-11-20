@@ -1,0 +1,790 @@
+/* ==========================================
+   Architecture Page
+========================================== */
+
+.architecture-main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  padding-block: var(--space-8);
+}
+
+.architecture-intro {
+  gap: var(--space-3);
+}
+
+.section-eyebrow {
+  color: var(--color-primary);
+  font-size: var(--font-xs);
+  font-weight: 700;
+  letter-spacing: 0.13em;
+}
+
+.architecture-intro h2 {
+  font-size: clamp(1.8rem, 4vw, 2.7rem);
+  font-weight: 750;
+}
+
+.architecture-intro p {
+  max-width: 760px;
+  color: var(--text-secondary);
+  font-size: var(--font-sm);
+}
+
+/* ==========================================
+   Top Navigation
+========================================== */
+
+.top-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.nav-link {
+  padding: 9px 14px;
+  color: var(--text-secondary);
+  font-size: var(--font-sm);
+  text-decoration: none;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  transition: var(--transition-fast);
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--color-primary);
+  background-color: rgba(34, 211, 238, 0.08);
+  border-color: rgba(34, 211, 238, 0.2);
+}
+
+/* ==========================================
+   Overview Cards
+========================================== */
+
+.overview-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.overview-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+  padding: var(--space-5);
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-panel);
+}
+
+.overview-card h3 {
+  font-size: var(--font-base);
+}
+
+.overview-card p {
+  margin-top: 4px;
+  color: var(--text-secondary);
+  font-size: var(--font-xs);
+}
+
+.overview-icon {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  font-size: var(--font-lg);
+  font-weight: 800;
+  border-radius: var(--radius-md);
+}
+
+.parser-icon {
+  color: var(--color-secondary);
+  background-color: rgba(167, 139, 250, 0.13);
+}
+
+.solver-icon {
+  color: var(--color-success);
+  background-color: rgba(52, 211, 153, 0.12);
+}
+
+.main-icon {
+  color: var(--color-primary);
+  background-color: rgba(34, 211, 238, 0.12);
+}
+
+.package-tag {
+  margin-left: auto;
+  padding: 5px 8px;
+  color: var(--text-muted);
+  font-size: 10px;
+  white-space: nowrap;
+  background-color: var(--bg-primary);
+  border-radius: var(--radius-sm);
+}
+
+/* ==========================================
+   Common Sections
+========================================== */
+
+.architecture-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  min-width: 0;
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.section-heading h2 {
+  margin-top: 6px;
+  font-size: var(--font-2xl);
+}
+
+.section-heading p {
+  margin-top: 5px;
+  color: var(--text-secondary);
+  font-size: var(--font-sm);
+}
+
+.graph-label {
+  padding: 7px 10px;
+  color: var(--color-primary);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  background-color: rgba(34, 211, 238, 0.08);
+  border: 1px solid rgba(34, 211, 238, 0.2);
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+/* ==========================================
+   Project Structure
+========================================== */
+
+.structure-panel {
+  padding: var(--space-6);
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+}
+
+.tree-root,
+.tree-folder-group,
+.tree-file {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 37px;
+}
+
+.tree-root {
+  padding-bottom: var(--space-3);
+  font-size: var(--font-base);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.tree-children {
+  display: flex;
+  flex-direction: column;
+  padding-top: var(--space-3);
+  padding-left: var(--space-5);
+}
+
+.tree-folder {
+  font-size: var(--font-sm);
+}
+
+.tree-folder-group strong,
+.tree-file code {
+  font-size: var(--font-sm);
+}
+
+.tree-folder-group strong {
+  color: var(--color-primary);
+}
+
+.tree-file {
+  padding-left: var(--space-8);
+  color: var(--text-secondary);
+}
+
+.tree-file code {
+  color: var(--text-primary);
+  font-family: monospace;
+}
+
+.tree-description {
+  margin-left: auto;
+  color: var(--text-muted);
+  font-size: var(--font-xs);
+}
+
+/* ==========================================
+   Data Types
+========================================== */
+
+.data-types-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-5);
+}
+
+.data-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+}
+
+.data-card-heading {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.data-card-heading h3 {
+  font-size: var(--font-base);
+}
+
+.data-card-heading p {
+  color: var(--text-muted);
+  font-size: var(--font-xs);
+}
+
+.data-type-icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  color: var(--color-secondary);
+  font-weight: 700;
+  background-color: rgba(167, 139, 250, 0.12);
+  border-radius: var(--radius-md);
+}
+
+.data-card pre {
+  overflow-x: auto;
+  padding: var(--space-4);
+  color: var(--color-primary);
+  font-size: var(--font-sm);
+  line-height: 1.8;
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+}
+
+.card-description {
+  color: var(--text-secondary);
+  font-size: var(--font-sm);
+  line-height: 1.7;
+}
+
+/* ==========================================
+   Function Graph
+========================================== */
+
+.graph-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-5);
+  padding: var(--space-4);
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+}
+
+.graph-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-secondary);
+  font-size: var(--font-xs);
+}
+
+.legend-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+
+.main-dot {
+  background-color: var(--color-primary);
+}
+
+.parser-dot {
+  background-color: var(--color-secondary);
+}
+
+.solver-dot {
+  background-color: var(--color-success);
+}
+
+.legend-line {
+  width: 22px;
+  height: 2px;
+  background-color: var(--text-secondary);
+}
+
+.recursion-line {
+  background-color: var(--color-danger);
+  border-top: 1px dashed var(--color-danger);
+}
+
+.graph-scroll {
+  overflow-x: auto;
+  padding: var(--space-4);
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  scrollbar-width: thin;
+  scrollbar-color: var(--bg-hover) var(--bg-primary);
+}
+
+.function-graph {
+  display: block;
+  width: 100%;
+  min-width: 1000px;
+  height: auto;
+}
+
+.graph-connectors path {
+  fill: none;
+  stroke: #94a3b8;
+  stroke-width: 2;
+  marker-end: url(#arrow);
+}
+
+.graph-connectors .parser-connector {
+  stroke: var(--color-secondary);
+  marker-end: url(#arrow-purple);
+}
+
+.graph-connectors .solver-connector {
+  stroke: var(--color-success);
+}
+
+.graph-connectors .backtrack-connector {
+  stroke: var(--color-danger);
+  stroke-dasharray: 7 5;
+  marker-end: url(#arrow);
+}
+
+.graph-node {
+  cursor: pointer;
+}
+
+.graph-node rect {
+  fill: var(--bg-primary);
+  stroke-width: 2;
+  transition:
+    fill var(--transition-fast),
+    stroke-width var(--transition-fast);
+}
+
+.graph-node text {
+  fill: var(--text-primary);
+  font-size: 15px;
+  font-weight: 700;
+  pointer-events: none;
+}
+
+.graph-node text.node-subtitle {
+  fill: var(--text-secondary);
+  font-size: 11px;
+  font-weight: 400;
+}
+
+.graph-node.main-node rect {
+  stroke: var(--color-primary);
+}
+
+.graph-node.parser-node rect {
+  stroke: var(--color-secondary);
+}
+
+.graph-node.solver-node rect {
+  stroke: var(--color-success);
+}
+
+.graph-node.backtrack-node rect {
+  stroke: var(--color-danger);
+}
+
+.graph-node:hover rect,
+.graph-node:focus rect {
+  fill: var(--bg-hover);
+  stroke-width: 4;
+}
+
+.graph-node:focus {
+  outline: none;
+}
+
+.graph-group-label {
+  fill: var(--text-muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.graph-note {
+  fill: var(--text-secondary);
+  font-size: 11px;
+}
+
+.graph-hint {
+  color: var(--text-muted);
+  font-size: var(--font-xs);
+}
+
+.graph-hint span {
+  color: var(--color-primary);
+  margin-right: 5px;
+}
+
+/* ==========================================
+   Function Documentation
+========================================== */
+
+.package-heading {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  margin-top: var(--space-3);
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-left: 4px solid var(--color-primary);
+  border-radius: var(--radius-md);
+}
+
+.package-heading > span {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  color: var(--text-primary);
+  font-size: var(--font-sm);
+  font-weight: 700;
+  background-color: var(--bg-elevated);
+  border-radius: var(--radius-sm);
+}
+
+.package-heading h3 {
+  font-size: var(--font-base);
+}
+
+.package-heading p {
+  margin-top: 3px;
+  color: var(--text-secondary);
+  font-size: var(--font-xs);
+}
+
+.parser-package-heading {
+  border-left-color: var(--color-secondary);
+}
+
+.solver-package-heading {
+  border-left-color: var(--color-success);
+}
+
+.function-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.function-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  scroll-margin-top: 24px;
+  transition:
+    border-color var(--transition-normal),
+    background-color var(--transition-normal);
+}
+
+.function-card:target {
+  border-color: var(--color-primary);
+  background-color: #15243b;
+  box-shadow: 0 0 0 2px rgba(34, 211, 238, 0.08);
+}
+
+.function-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.function-index {
+  color: var(--text-muted);
+  font-family: monospace;
+  font-size: var(--font-xs);
+}
+
+.function-type {
+  padding: 5px 8px;
+  color: var(--color-primary);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  background-color: rgba(34, 211, 238, 0.08);
+  border-radius: var(--radius-sm);
+}
+
+.parser-function .function-type {
+  color: var(--color-secondary);
+  background-color: rgba(167, 139, 250, 0.1);
+}
+
+.solver-function .function-type {
+  color: var(--color-success);
+  background-color: rgba(52, 211, 153, 0.08);
+}
+
+.function-card h3 {
+  font-size: var(--font-base);
+  overflow-wrap: anywhere;
+}
+
+.function-signature {
+  display: inline-block;
+  align-self: flex-start;
+  padding: 5px 9px;
+  color: var(--color-primary);
+  font-family: monospace;
+  font-size: var(--font-xs);
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+}
+
+.function-card > p {
+  color: var(--text-secondary);
+  font-size: var(--font-sm);
+  line-height: 1.7;
+}
+
+.function-responsibility {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: auto;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border-color);
+}
+
+.function-responsibility strong {
+  font-size: var(--font-xs);
+}
+
+.function-responsibility ul {
+  padding-left: 18px;
+  color: var(--text-secondary);
+  font-size: var(--font-xs);
+  line-height: 1.9;
+}
+
+/* ==========================================
+   Backtracking Flow
+========================================== */
+
+.backtracking-panel {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-5);
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+}
+
+.backtracking-step {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+}
+
+.flow-number {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  color: var(--color-primary);
+  font-size: var(--font-sm);
+  font-weight: 700;
+  background-color: rgba(34, 211, 238, 0.1);
+  border-radius: var(--radius-md);
+}
+
+.backtracking-step h3 {
+  font-size: var(--font-sm);
+}
+
+.backtracking-step p {
+  margin-top: 3px;
+  color: var(--text-secondary);
+  font-size: var(--font-xs);
+}
+
+.flow-status {
+  margin-left: auto;
+  padding: 6px 9px;
+  font-size: var(--font-xs);
+  white-space: nowrap;
+  background-color: var(--bg-elevated);
+  border-radius: 999px;
+}
+
+.flow-status.success {
+  color: var(--color-success);
+}
+
+.flow-status.danger {
+  color: var(--color-danger);
+}
+
+.flow-connector {
+  width: 2px;
+  height: 22px;
+  margin-left: 36px;
+  background-color: var(--text-muted);
+}
+
+.backtracking-failure {
+  border-color: rgba(251, 113, 133, 0.25);
+}
+
+.backtracking-failure .flow-number {
+  color: var(--color-danger);
+  background-color: rgba(251, 113, 133, 0.1);
+}
+
+.backtracking-note {
+  margin-top: var(--space-4);
+  padding: var(--space-3);
+  color: var(--text-secondary);
+  font-size: var(--font-xs);
+  line-height: 1.7;
+  background-color: var(--bg-primary);
+  border-radius: var(--radius-md);
+}
+
+/* ==========================================
+   Footer
+========================================== */
+
+.architecture-main .footer {
+  margin-top: var(--space-3);
+}
+
+/* ==========================================
+   Responsive Design
+========================================== */
+
+@media (max-width: 1050px) {
+  .function-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .overview-card {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 820px) {
+  .overview-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .overview-card {
+    flex-wrap: nowrap;
+  }
+
+  .package-tag {
+    margin-left: auto;
+  }
+}
+
+@media (max-width: 560px) {
+  .architecture-main {
+    gap: var(--space-6);
+    padding-block: var(--space-6);
+  }
+
+  .topbar {
+    flex-wrap: wrap;
+  }
+
+  .top-nav {
+    order: 3;
+    width: 100%;
+  }
+
+  .nav-link {
+    flex: 1;
+    text-align: center;
+  }
+
+  .function-grid,
+  .data-types-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section-heading {
+    align-items: flex-start;
+  }
+
+  .graph-label {
+    font-size: 8px;
+  }
+
+  .graph-legend {
+    gap: var(--space-3);
+  }
+
+  .structure-panel {
+    padding: var(--space-4);
+  }
+
+  .tree-description {
+    display: none;
+  }
+
+  .backtracking-step {
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .backtracking-step > div {
+    flex: 1;
+    min-width: 150px;
+  }
+
+  .flow-status {
+    margin-left: 50px;
+  }
+}

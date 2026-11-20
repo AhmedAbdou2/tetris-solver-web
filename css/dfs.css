@@ -1,0 +1,790 @@
+/* ==========================================
+   DFS Explanation Cards
+========================================== */
+
+.dfs-explanation-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.dfs-info-card {
+  position: relative;
+  padding: var(--space-5);
+  overflow: hidden;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+}
+
+.dfs-info-number {
+  display: block;
+  margin-bottom: var(--space-4);
+  color: var(--color-primary);
+  font-family: monospace;
+  font-size: var(--font-xs);
+  font-weight: 700;
+}
+
+.dfs-info-card h3 {
+  margin-bottom: var(--space-2);
+  font-size: var(--font-sm);
+}
+
+.dfs-info-card p {
+  color: var(--text-secondary);
+  font-size: var(--font-xs);
+  line-height: 1.8;
+}
+
+/* ==========================================
+   DFS Demo
+========================================== */
+
+.dfs-demo-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  padding: var(--space-5);
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+}
+
+.dfs-demo-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.dfs-demo-header h3 {
+  font-size: var(--font-base);
+}
+
+.dfs-demo-header p {
+  margin-top: 4px;
+  color: var(--text-secondary);
+  font-size: var(--font-xs);
+}
+
+.dfs-demo-status {
+  padding: 7px 12px;
+  color: var(--color-primary);
+  font-size: var(--font-xs);
+  background-color: rgba(34, 211, 238, 0.08);
+  border: 1px solid rgba(34, 211, 238, 0.2);
+  border-radius: 999px;
+}
+
+.dfs-demo-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  gap: var(--space-5);
+}
+
+/* ==========================================
+   DFS Graph
+========================================== */
+
+.dfs-graph-stage {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-4);
+  min-width: 0;
+  padding: var(--space-4);
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+}
+
+.dfs-graph-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dfs-graph-heading h4 {
+  font-size: var(--font-sm);
+}
+
+.dfs-graph-heading span {
+  color: var(--text-muted);
+  font-size: var(--font-xs);
+}
+
+.dfs-graph {
+  display: block;
+  width: 100%;
+  max-width: 520px;
+  margin-inline: auto;
+  overflow: visible;
+}
+
+.dfs-edges line {
+  stroke: #475569;
+  stroke-width: 4;
+  stroke-linecap: round;
+  transition:
+    stroke var(--transition-normal),
+    stroke-width var(--transition-normal);
+}
+
+.dfs-edges line.is-active {
+  stroke: var(--color-primary);
+  stroke-width: 6;
+}
+
+.dfs-node circle {
+  fill: var(--bg-elevated);
+  stroke: #64748b;
+  stroke-width: 3;
+  transition:
+    fill var(--transition-normal),
+    stroke var(--transition-normal),
+    filter var(--transition-normal);
+}
+
+.dfs-node text {
+  fill: var(--text-primary);
+  font-size: 24px;
+  font-weight: 700;
+  text-anchor: middle;
+  pointer-events: none;
+}
+
+.dfs-node.is-pending circle {
+  fill: rgba(167, 139, 250, 0.18);
+  stroke: var(--color-secondary);
+}
+
+.dfs-node.is-visited circle {
+  fill: rgba(52, 211, 153, 0.2);
+  stroke: var(--color-success);
+}
+
+.dfs-node.is-current circle {
+  fill: rgba(34, 211, 238, 0.22);
+  stroke: var(--color-primary);
+  stroke-width: 5;
+  filter: drop-shadow(0 0 8px rgba(34, 211, 238, 0.4));
+}
+
+.dfs-graph-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-4);
+}
+
+.dfs-graph-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--text-secondary);
+  font-size: var(--font-xs);
+}
+
+.dfs-legend-color {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+
+.dfs-legend-color.current {
+  background-color: var(--color-primary);
+}
+
+.dfs-legend-color.pending {
+  background-color: var(--color-secondary);
+}
+
+.dfs-legend-color.visited {
+  background-color: var(--color-success);
+}
+
+/* ==========================================
+   DFS State Panel
+========================================== */
+
+.dfs-state-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.dfs-current-step {
+  padding: var(--space-4);
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+}
+
+.dfs-current-step > span {
+  color: var(--color-primary);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.dfs-current-step > strong {
+  float: right;
+  color: var(--text-muted);
+  font-family: monospace;
+  font-size: var(--font-xs);
+}
+
+.dfs-current-step h3 {
+  margin-top: var(--space-3);
+  font-size: var(--font-lg);
+}
+
+.dfs-current-step p {
+  margin-top: var(--space-2);
+  color: var(--text-secondary);
+  font-size: var(--font-sm);
+  line-height: 1.7;
+}
+
+.dfs-state-block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+}
+
+.dfs-state-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.dfs-state-heading h4 {
+  font-size: var(--font-xs);
+}
+
+.dfs-state-heading span {
+  color: var(--text-muted);
+  font-family: monospace;
+  font-size: 10px;
+}
+
+.dfs-chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px;
+  min-height: 28px;
+}
+
+.dfs-stack-chip,
+.dfs-discovered-chip,
+.dfs-visited-chip {
+  display: grid;
+  place-items: center;
+  min-width: 29px;
+  height: 28px;
+  padding-inline: 8px;
+  font-size: var(--font-xs);
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+}
+
+.dfs-stack-chip {
+  color: var(--color-secondary);
+  background-color: rgba(167, 139, 250, 0.12);
+  border: 1px solid rgba(167, 139, 250, 0.3);
+}
+
+.dfs-stack-chip.stack-top {
+  color: #0b1120;
+  background-color: var(--color-secondary);
+  border-color: var(--color-secondary);
+  box-shadow: 0 0 8px rgba(167, 139, 250, 0.2);
+}
+
+.dfs-discovered-chip {
+  color: var(--color-primary);
+  background-color: rgba(34, 211, 238, 0.1);
+  border: 1px solid rgba(34, 211, 238, 0.2);
+}
+
+.dfs-visited-chip {
+  color: var(--color-success);
+  background-color: rgba(52, 211, 153, 0.1);
+  border: 1px solid rgba(52, 211, 153, 0.25);
+}
+
+.dfs-empty-value {
+  color: var(--text-muted);
+  font-size: var(--font-xs);
+}
+
+/* ==========================================
+   Traversal Result
+========================================== */
+
+.dfs-traversal-result {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  background-color: rgba(52, 211, 153, 0.06);
+  border: 1px solid rgba(52, 211, 153, 0.2);
+  border-radius: var(--radius-md);
+}
+
+.dfs-traversal-result span {
+  color: var(--text-secondary);
+  font-size: var(--font-xs);
+}
+
+.dfs-traversal-result strong {
+  color: var(--color-success);
+  font-family: monospace;
+  font-size: var(--font-base);
+}
+
+/* ==========================================
+   DFS Controls
+========================================== */
+
+.dfs-controls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.dfs-control-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.dfs-control-buttons button {
+  flex: 1;
+  min-width: 80px;
+  padding: 10px 12px;
+  color: var(--text-primary);
+  font-size: var(--font-xs);
+  font-weight: 600;
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.dfs-control-buttons button:hover:not(:disabled) {
+  background-color: var(--bg-hover);
+  border-color: var(--color-primary);
+}
+
+#dfs-play {
+  color: var(--color-primary);
+  border-color: rgba(34, 211, 238, 0.3);
+}
+
+.dfs-control-buttons button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.dfs-progress-track {
+  width: 100%;
+  height: 5px;
+  overflow: hidden;
+  background-color: var(--bg-primary);
+  border-radius: 999px;
+}
+
+.dfs-progress-fill {
+  width: 0;
+  height: 100%;
+  background-color: var(--color-primary);
+  border-radius: inherit;
+  transition: width 250ms ease;
+}
+
+/* ==========================================
+   DFS Application Cards
+========================================== */
+
+.dfs-application-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-5);
+}
+
+.dfs-application-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+}
+
+.dfs-application-card .application-label {
+  color: var(--color-secondary);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.solver-application .application-label {
+  color: var(--color-success);
+}
+
+.dfs-application-card h3 {
+  font-size: var(--font-base);
+}
+
+.dfs-application-card > p {
+  color: var(--text-secondary);
+  font-size: var(--font-sm);
+  line-height: 1.8;
+}
+
+.application-code {
+  width: 100%;
+  padding: var(--space-3);
+  overflow-x: auto;
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+}
+
+.application-code code {
+  color: var(--color-primary);
+  font-family: monospace;
+  font-size: var(--font-xs);
+  white-space: nowrap;
+}
+
+.application-result strong {
+  color: var(--text-primary);
+}
+
+.dfs-application-card .application-result {
+  margin-top: auto;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border-color);
+}
+
+/* ==========================================
+   Important Note
+========================================== */
+
+.dfs-important-note {
+  padding: var(--space-4);
+  color: var(--text-secondary);
+  font-size: var(--font-sm);
+  line-height: 1.8;
+  background-color: rgba(251, 191, 36, 0.06);
+  border: 1px solid rgba(251, 191, 36, 0.2);
+  border-radius: var(--radius-md);
+}
+
+.dfs-important-note strong {
+  color: var(--color-warning);
+}
+
+/* ==========================================
+   Responsive
+========================================== */
+
+@media (max-width: 1000px) {
+  .dfs-explanation-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .dfs-demo-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .dfs-explanation-grid,
+  .dfs-application-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dfs-demo-panel {
+    padding: var(--space-3);
+  }
+
+  .dfs-demo-header {
+    align-items: flex-start;
+  }
+
+  .dfs-control-buttons button {
+    min-width: 65px;
+  }
+
+  .dfs-graph {
+    min-width: 0;
+  }
+
+  .dfs-graph-legend {
+    gap: var(--space-2);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dfs-node circle,
+  .dfs-edges line,
+  .dfs-progress-fill {
+    transition: none;
+  }
+}
+
+/* ==========================================
+   DFS Visualization Modes
+========================================== */
+
+.dfs-mode-switch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  padding: 5px;
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+}
+
+.dfs-mode-switch button {
+  flex: 1;
+  padding: 11px 16px;
+  color: var(--text-secondary);
+  font-size: var(--font-sm);
+  font-weight: 600;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.dfs-mode-switch button:hover {
+  color: var(--text-primary);
+  background-color: var(--bg-hover);
+}
+
+.dfs-mode-switch button.active {
+  color: var(--color-primary);
+  background-color: rgba(34, 211, 238, 0.1);
+  border-color: rgba(34, 211, 238, 0.25);
+}
+
+/* ==========================================
+   Shape Selector
+========================================== */
+
+.dfs-shape-picker {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+}
+
+.dfs-shape-picker label {
+  color: var(--text-secondary);
+  font-size: var(--font-sm);
+}
+
+.dfs-shape-picker select {
+  min-width: 180px;
+  padding: 9px 12px;
+  color: var(--text-primary);
+  font-size: var(--font-sm);
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+}
+
+/* ==========================================
+   Dynamic SVG Graph
+========================================== */
+
+#dfs-edges,
+#dfs-nodes {
+  overflow: visible;
+}
+
+.dfs-edge {
+  stroke: #475569;
+  stroke-width: 4;
+  stroke-linecap: round;
+  transition:
+    stroke var(--transition-fast),
+    stroke-width var(--transition-fast);
+}
+
+.dfs-edge.is-tree-edge {
+  stroke: var(--color-success);
+  stroke-width: 4;
+}
+
+.dfs-edge.is-active {
+  stroke: var(--color-primary);
+  stroke-width: 7;
+}
+
+/* Node Shapes */
+
+.dfs-node circle,
+.dfs-node rect {
+  fill: var(--bg-elevated);
+  stroke: #64748b;
+  stroke-width: 3;
+  transition:
+    fill var(--transition-fast),
+    stroke var(--transition-fast),
+    filter var(--transition-fast);
+}
+
+.dfs-node text {
+  fill: var(--text-primary);
+  font-size: 21px;
+  font-weight: 700;
+  text-anchor: middle;
+  pointer-events: none;
+}
+
+.dfs-node.is-pending circle,
+.dfs-node.is-pending rect {
+  fill: rgba(167, 139, 250, 0.25);
+  stroke: var(--color-secondary);
+}
+
+.dfs-node.is-visited circle,
+.dfs-node.is-visited rect {
+  fill: rgba(52, 211, 153, 0.2);
+  stroke: var(--color-success);
+}
+
+.dfs-node.is-current circle,
+.dfs-node.is-current rect {
+  fill: rgba(34, 211, 238, 0.25);
+  stroke: var(--color-primary);
+  stroke-width: 5;
+  filter: drop-shadow(0 0 8px rgba(34, 211, 238, 0.4));
+}
+
+/* ==========================================
+   State Details
+========================================== */
+
+.dfs-direction-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+}
+
+.dfs-direction-card span {
+  color: var(--text-secondary);
+  font-size: var(--font-xs);
+}
+
+.dfs-direction-card strong {
+  color: var(--color-primary);
+  font-size: var(--font-xs);
+  text-align: right;
+}
+
+.dfs-domain-chip {
+  display: grid;
+  place-items: center;
+  min-width: 29px;
+  height: 28px;
+  padding-inline: 8px;
+  color: var(--text-secondary);
+  font-size: var(--font-xs);
+  font-weight: 700;
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+}
+
+.dfs-processed-chip {
+  display: grid;
+  place-items: center;
+  min-width: 29px;
+  height: 28px;
+  padding-inline: 8px;
+  color: var(--color-success);
+  font-size: var(--font-xs);
+  font-weight: 700;
+  background-color: rgba(52, 211, 153, 0.1);
+  border: 1px solid rgba(52, 211, 153, 0.25);
+  border-radius: var(--radius-sm);
+}
+
+.dfs-legend-color.unvisited {
+  background-color: #64748b;
+}
+
+/* ==========================================
+   Implementation Note
+========================================== */
+
+.dfs-implementation-note {
+  padding: var(--space-4);
+  color: var(--text-secondary);
+  font-size: var(--font-xs);
+  line-height: 1.8;
+  background-color: rgba(34, 211, 238, 0.05);
+  border: 1px solid rgba(34, 211, 238, 0.15);
+  border-radius: var(--radius-md);
+}
+
+.dfs-implementation-note strong {
+  color: var(--color-primary);
+}
+
+/* ==========================================
+   Responsive Adjustments
+========================================== */
+
+@media (max-width: 560px) {
+  .dfs-mode-switch button {
+    min-width: 100%;
+  }
+
+  .dfs-shape-picker {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .dfs-shape-picker select {
+    width: 100%;
+  }
+
+  .dfs-direction-card {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .dfs-direction-card strong {
+    text-align: left;
+  }
+}

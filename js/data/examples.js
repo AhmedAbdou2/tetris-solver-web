@@ -43,7 +43,6 @@ export const examples = {
 ..#.
 .##.
 .#..
-....
 
 .###
 ...#
@@ -78,5 +77,6 @@ export const examples = {
 ....
 ###.
 .#..
-....`,
+....
+`,
 };
