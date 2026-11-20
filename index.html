@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Interactive Tetris Solver with DFS and Backtracking visualization."
+    />
+
+    <title>Tetris Solver</title>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="./css/variables.css" />
+    <link rel="stylesheet" href="./css/reset.css" />
+    <link rel="stylesheet" href="./css/layout.css" />
+    <link rel="stylesheet" href="./css/components.css" />
+    <link rel="stylesheet" href="./css/responsive.css" />
+  </head>
+  <body>
+    <div class="app-container">
+      <!-- Header -->
+      <header class="topbar">
+        <div class="brand">
+          <div class="brand-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+
+          <div class="brand-info">
+            <h1>TETRIS SOLVER</h1>
+            <p>Interactive Algorithm Visualizer</p>
+          </div>
+        </div>
+
+        <div class="solver-status">
+          <span class="status-indicator"></span>
+          <span id="solver-status-text">Ready</span>
+        </div>
+      </header>
+
+      <main class="main-content">
+        <!-- Page Introduction -->
+        <section class="page-intro">
+          <h2>Explore the Algorithm</h2>
+          <p>
+            Visualize how DFS and Backtracking solve the Tetris puzzle step by
+            step.
+          </p>
+        </section>
+
+        <!-- Main Workspace -->
+        <section class="workbench">
+          <!-- Input Panel -->
+          <aside class="panel input-panel">
+            <div class="panel-heading">
+              <div>
+                <h3>Input</h3>
+                <p>Provide your Tetrominoes</p>
+              </div>
+            </div>
+
+            <div class="input-controls">
+              <label for="example-select">Examples</label>
+
+              <select id="example-select">
+                <option value="">Select an example</option>
+                <option value="single">Single Tetromino</option>
+                <option value="multiple">Multiple Tetrominoes</option>
+                <option value="disconnected">
+                  Invalid: Disconnected Cells
+                </option>
+                <option value="hard">Hard Case: 12 Tetrominoes</option>
+              </select>
+
+              <div class="divider">
+                <span>OR</span>
+              </div>
+
+              <label for="file-input" class="upload-button">
+                Upload TXT File
+              </label>
+
+              <input type="file" id="file-input" accept=".txt" />
+
+              <label for="input-editor">Input Editor</label>
+
+              <textarea
+                id="input-editor"
+                placeholder="Enter your Tetrominoes here..."
+                spellcheck="false"
+              ></textarea>
+            </div>
+
+            <div id="input-errors" class="error-panel" hidden></div>
+
+            <div class="action-buttons">
+              <button id="solve-button" disabled>Solve Puzzle</button>
+
+              <button id="reset-button" disabled>Reset</button>
+              <button id="cancel-button" type="button" hidden disabled>
+                Cancel Search
+              </button>
+            </div>
+          </aside>
+
+          <!-- Visualization Area -->
+          <section class="visualization-area">
+            <div class="visualization-grid">
+              <!-- Grid Panel -->
+              <section class="panel board-panel">
+                <div class="panel-heading">
+                  <div>
+                    <h3>Solution Grid</h3>
+                    <p>Board visualization</p>
+                  </div>
+
+                  <span id="grid-dimensions">-- × --</span>
+                </div>
+
+                <div id="board-container">
+                  <div class="empty-state">
+                    <p>Your solution will appear here.</p>
+                    <span>Upload an input to get started.</span>
+                  </div>
+                </div>
+
+                <!-- Color Legend -->
+                <div class="color-legend">
+                  <h4>Legend</h4>
+                  <div class="legend-items">
+                    <span>Placement</span>
+                    <span>Backtracking</span>
+                    <span>Current Piece</span>
+                    <span>Empty Cell</span>
+                  </div>
+                </div>
+              </section>
+
+              <!-- Algorithm Steps -->
+              <section class="panel steps-panel">
+                <div class="panel-heading">
+                  <div>
+                    <h3>Algorithm Steps</h3>
+                    <p>DFS execution history</p>
+                  </div>
+
+                  <span id="step-counter">0 Steps</span>
+                </div>
+
+                <div id="steps-container">
+                  <div class="empty-state">
+                    <p>No steps available.</p>
+                    <span>Run the solver to see the execution.</span>
+                  </div>
+                </div>
+
+                <!-- Playback Controls -->
+
+                <div class="playback-controls">
+                  <div class="playback-buttons">
+                    <button id="first-step" disabled>First</button>
+                    <button id="previous-step" disabled>Previous</button>
+                    <button id="play-pause" disabled>Play</button>
+                    <button id="next-step" disabled>Next</button>
+                    <button id="last-step" disabled>Last</button>
+                  </div>
+
+                  <div class="playback-speed-control">
+                    <label for="playback-speed">Playback Speed</label>
+
+                    <select id="playback-speed">
+                      <option value="800">0.5×</option>
+                      <option value="350" selected>1×</option>
+                      <option value="175">2×</option>
+                      <option value="85">4×</option>
+                    </select>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </section>
+        </section>
+
+        <!-- Results Panel -->
+        <section class="panel results-panel">
+          <div class="panel-heading">
+            <div>
+              <h3>Solver Results</h3>
+              <p>Execution summary and statistics</p>
+            </div>
+
+            <span id="solution-status">Not Started</span>
+          </div>
+
+          <div class="results-grid">
+            <div class="result-item">
+              <span>Grid Size</span>
+              <strong id="result-grid-size">--</strong>
+            </div>
+
+            <div class="result-item">
+              <span>Tetrominoes</span>
+              <strong id="result-piece-count">--</strong>
+            </div>
+
+            <div class="result-item">
+              <span>Search Steps</span>
+              <strong id="result-search-steps">--</strong>
+            </div>
+
+            <div class="result-item">
+              <span>Backtracks</span>
+              <strong id="result-backtracks">--</strong>
+            </div>
+
+            <div class="result-item">
+              <span>Execution Time</span>
+              <strong id="result-execution-time">--</strong>
+            </div>
+
+            <div class="result-item">
+              <span>Grid Sizes Tried</span>
+              <strong id="result-grid-sizes">--</strong>
+            </div>
+          </div>
+
+          <button id="download-button" disabled>Download Solution</button>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <p>Tetris Solver · Built by Ahmed Abdou</p>
+
+        <a
+          class="github-link"
+          href="https://github.com/AhmedAbdou2/tetris-solver-web"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          View on GitHub
+        </a>
+      </footer>
+    </div>
+
+    <script type="module" src="./js/main.js"></script>
+  </body>
+</html>

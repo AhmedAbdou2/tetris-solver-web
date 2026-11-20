@@ -1,0 +1,157 @@
+/* ===== Page Layout ===== */
+
+body {
+  background:
+    radial-gradient(
+      circle at 10% 0%,
+      rgba(34, 211, 238, 0.07),
+      transparent 30%
+    ),
+    var(--bg-primary);
+}
+
+.app-container {
+  width: min(1440px, calc(100% - 48px));
+  margin-inline: auto;
+  padding-block: var(--space-6);
+}
+
+/* ===== Header ===== */
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding-bottom: var(--space-6);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.brand-info h1 {
+  font-size: var(--font-lg);
+  letter-spacing: 0.08em;
+}
+
+.brand-info p {
+  color: var(--text-secondary);
+  font-size: var(--font-xs);
+}
+
+/* ===== Main Content ===== */
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  padding-block: var(--space-8);
+}
+
+.page-intro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.page-intro h2 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+}
+
+.page-intro p {
+  color: var(--text-secondary);
+  font-size: var(--font-sm);
+}
+
+/* ===== Workspace ===== */
+
+.workbench {
+  display: grid;
+  grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
+  align-items: stretch;
+  gap: var(--space-5);
+}
+
+.visualization-area {
+  min-width: 0;
+}
+
+.visualization-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-5);
+  height: 100%;
+}
+
+.panel {
+  min-width: 0;
+  padding: var(--space-5);
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-panel);
+}
+
+.input-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.board-panel,
+.steps-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  min-height: 480px;
+}
+
+.panel-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.panel-heading h3 {
+  font-size: var(--font-base);
+  font-weight: 600;
+}
+
+.panel-heading p {
+  margin-top: var(--space-1);
+  color: var(--text-secondary);
+  font-size: var(--font-xs);
+}
+
+/* ===== Results ===== */
+
+.results-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+/* ===== Footer ===== */
+
+.footer {
+  padding-block: var(--space-5);
+  border-top: 1px solid var(--border-color);
+  text-align: center;
+}
+
+.footer p {
+  color: var(--text-muted);
+  font-size: var(--font-xs);
+}
